@@ -5,23 +5,23 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Board {
-	
+
 	static Color emptyTileColor = Color.WHITE;
 	static Color newTileColor = Color.ORANGE;
 	static Color combinedTileColor = Color.GREEN;
 	static Color movedTileColor = new Color(255, 255, 150);
-	
+
 	private int[][] tiles;
 	public Color[][] colors;
 	private int size;
 	private boolean valid;
 	private int score;
-	
+
 	private Random random;
-	
+
 	public Board(int size) {
 		super();
-		
+
 		this.size = size;
 		tiles = new int[size][size];
 		colors = new Color[size][size];
@@ -33,16 +33,16 @@ public class Board {
 		}
 		valid = true;
 		score = 0;
-		
+
 		random = new Random();
-		
+
 		addRandomTile();
 		addRandomTile();
 	}
-	
+
 	public Board(Board other) {
 		super();
-		
+
 		size = other.size;
 		valid = other.valid;
 		score = other.score;
@@ -51,12 +51,12 @@ public class Board {
 			tiles[i] = other.tiles[i].clone();
 		}
 	}
-	
+
 	public void addRandomTile() {
 		int tile;
 		if (random.nextInt(10) == 0) tile = 4;
 		else tile = 2;
-		
+
 		Pos loc = getRandomEmptyLocation();
 		if (loc == null) {
 			invalidateBoard();
@@ -66,7 +66,7 @@ public class Board {
 			colors[loc.x][loc.y] = newTileColor;
 		}
 	}
-	
+
 	public void checkValidity() {
 		boolean checksOut = false;
 		Pos[] dirs = Pos.compass;
@@ -80,7 +80,7 @@ public class Board {
 			invalidateBoard();
 		}
 	}
-	
+
 	public void invalidateBoard() {
 		valid = false;
 		for (int x=0; x<size; x++) {
@@ -89,7 +89,7 @@ public class Board {
 			}
 		}
 	}
-	
+
 	public boolean moveTiles(Button direction, boolean color) {
 		if (!isMoveable(new Pos(direction))) {
 			return false;
@@ -134,7 +134,7 @@ public class Board {
 		}
 		return true;
 	}
-	
+
 	private void moveTile(int x, int y, Pos direction, boolean[][] frozen, boolean color) {
 		if (tiles[x][y] == 0) return;
 		int newx = x;
@@ -179,7 +179,7 @@ public class Board {
 			score += tiles[newx][newy];
 		}
 	}
-	
+
 	public boolean isMoveable(Pos direction) {
 		for (int x=0; x<size; x++) {
 			for (int y=0; y<size; y++) {
@@ -195,7 +195,7 @@ public class Board {
 		}
 		return false;
 	}
-	
+
 	private Pos getRandomEmptyLocation() {
 		ArrayList<Pos> candidates = new ArrayList<Pos>();
 		for (int x=0; x<size; x++) {
@@ -208,7 +208,7 @@ public class Board {
 		if (candidates.size() == 0) return null;
 		return candidates.get(random.nextInt(candidates.size()));
 	}
-	
+
 	public int getNumberOfEmptySpaces() {
 		int score = 0;
 		for (int x=0; x<size; x++) {
@@ -219,7 +219,7 @@ public class Board {
 		}
 		return score;
 	}
-	
+
 	public void display() {
 		StringBuilder sb = new StringBuilder();
 		for (int x=0; x<size; x++) {
@@ -230,7 +230,7 @@ public class Board {
 		}
 		System.out.print(sb.toString());
 	}
-	
+
 	public int getSize() {
 		return size;
 	}
@@ -246,15 +246,15 @@ public class Board {
 	public int getTile(int x, int y) {
 		return tiles[x][y];
 	}
-	
+
 	/////////////////////////
 	// Algorithmic scoring //
 	/////////////////////////
-	
+
 	private enum Algorithm {
 		score, path
 	}
-	
+
 	public double heuristic() {
 		Algorithm alg = Algorithm.path;
 		switch (alg) {
@@ -296,7 +296,7 @@ public class Board {
 			return random.nextDouble()*100;
 		}
 	}
-	
+
 	public int getNumberOfJoins() {
 		int total = 0;
 		for (int x=0; x<size; x++) {
@@ -308,7 +308,7 @@ public class Board {
 		}
 		return total;
 	}
-	
+
 	public int getNumberOfTiles() {
 		int total = 0;
 		for (int x=0; x<size; x++) {
@@ -320,7 +320,7 @@ public class Board {
 		}
 		return total;
 	}
-	
+
 	public double getScoreOnBoard() {
 		double total = 0;
 		for (int x=0; x<size; x++) {
@@ -332,7 +332,7 @@ public class Board {
 		}
 		return total;
 	}
-	
+
 	public int getOrderingScore() {
 		int total = 0;
 		for (int x=0; x<size-1; x++) {
@@ -359,7 +359,7 @@ public class Board {
 		}
 		return total;
 	}
-	
+
 	public double getAdjacentTileScore() {
 		Pos[] directions = Pos.compass;
 		double score = 0;
@@ -376,7 +376,7 @@ public class Board {
 		}
 		return score;
 	}
-	
+
 	public double getLogTileScore() {
 		double score = 0;
 		for (int x=0; x<size; x++) {
@@ -387,7 +387,7 @@ public class Board {
 		}
 		return score;
 	}
-	
+
 	public int getAlignedTiles() {
 		Pos[] directions = Pos.compass;
 		int score = 0;
@@ -403,5 +403,5 @@ public class Board {
 		}
 		return score;
 	}
-	
+
 }

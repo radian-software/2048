@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Board {
-	
+
 	// Lookup tables
 	private static short[] leftTable;
 	private static short[] rightTable;
@@ -24,13 +24,13 @@ public class Board {
 	private static int[] leftScore;
 	private static int[] rightScore;
 	static { generateTables(); }
-	
+
 	// Instance variables
 	private static final Random random = new Random();
 	private long tiles;
 	private boolean valid;
 	private int score;
-	
+
 	// Constructors
 	public Board() {
 		tiles = 0;
@@ -47,7 +47,7 @@ public class Board {
 		valid = board.isValid();
 		score = board.getScore();
 	}
-	
+
 	// Public game methods (moving tiles)
 	public boolean canMove(Button direction) {
 		switch (direction) {
@@ -94,7 +94,7 @@ public class Board {
 		else
 			valid = false;
 	}
-	
+
 	// Private game methods (moving tiles)
 	private boolean canMoveHorizontally() {
 		for (int r=0; r<size; r++) {
@@ -189,7 +189,7 @@ public class Board {
 	public void testValidity() {
 		valid = canMove();
 	}
-	
+
 	// Board operations
 	protected short getRow(int r) {
 		return (short)((tiles >> r*ROW_SIZE) & ROW_MASK); // Shifting to the right and nabbing the last sixteen bits as a short.
@@ -218,7 +218,7 @@ public class Board {
 		int index = ROW_SIZE*location.r + TILE_SIZE*location.c;
 		tiles = (tiles & ~(TILE_MASK << index)) | (((long)tile) << index); // Replacing four bits as a long 0b[...60 zeroes...]abcd.
 	}
-	
+
 	// Row operations
 	private static boolean canMoveLeft(short row) {
 		return leftMoveable[rowToIndex(row)];
@@ -241,7 +241,7 @@ public class Board {
 	private static int rightScore(short row) {
 		return rightScore[rowToIndex(row)];
 	}
-	
+
 	// Lookup table generation
 	private static void generateTables() {
 		leftTable = new short[length];
@@ -378,7 +378,7 @@ public class Board {
 		}
 		return inc;
 	}
-	
+
 	// Field access
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();

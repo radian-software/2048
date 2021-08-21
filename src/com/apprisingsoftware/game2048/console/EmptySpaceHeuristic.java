@@ -3,7 +3,7 @@ package com.apprisingsoftware.game2048.console;
 import static com.apprisingsoftware.game2048.console.BoardStats.size;
 
 public class EmptySpaceHeuristic extends AbstractRowColumnHeuristic {
-	
+
 	@Override public int score(byte[] row) {
 		int score = 0;
 		int maxValue = -1;
@@ -20,5 +20,5 @@ public class EmptySpaceHeuristic extends AbstractRowColumnHeuristic {
 			score += 10;
 		}
 		return score;
-	}	
+	}
 }

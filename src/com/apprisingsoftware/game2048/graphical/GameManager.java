@@ -5,19 +5,19 @@ import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 public class GameManager {
-	
+
 	private Board board;
 	private Frame app;
 	private boolean autoplaying;
 	private boolean profiling;
-	
+
 	public GameManager(int size, Frame app) {
 		super();
 		this.app = app;
 		board = new Board(size);
 		autoplaying = false;
 	}
-	
+
 	public void playGame(Button input) {
 		if (profiling) return;
 		autoplaying = false;
@@ -83,7 +83,7 @@ public class GameManager {
 			}
 		}
 	}
-	
+
 	private void inputButton(Button input) {
 		boolean success;
 		if (Arrays.asList(Button.compass).contains(input)) {
@@ -99,7 +99,7 @@ public class GameManager {
 			}
 		}
 	}
-	
+
 	public void doAutoplayIfEnabled() {
 		if (autoplaying) {
 			Button hint = Solver.advise(board);
@@ -107,9 +107,9 @@ public class GameManager {
 			app.repaint();
 		}
 	}
-	
+
 	public Board getBoard() {
 		return board;
 	}
-	
+
 }

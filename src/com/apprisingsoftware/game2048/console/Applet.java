@@ -8,9 +8,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Applet {
-	
+
 	private static final String separator = "+------------------------+";
-	
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
 		String input;

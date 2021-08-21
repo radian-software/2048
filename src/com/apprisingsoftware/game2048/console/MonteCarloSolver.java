@@ -3,15 +3,15 @@ package com.apprisingsoftware.game2048.console;
 import java.util.Random;
 
 public class MonteCarloSolver implements Solver {
-	
+
 	private int gamesPerMove;
-	
+
 	private static final Random random = new Random();
-	
+
 	public MonteCarloSolver(int gamesPerMove) {
 		this.gamesPerMove = gamesPerMove;
 	}
-	
+
 	@Override public Button getBestDirection(Board board) {
 		Button[] compass = Button.compass;
 		int games = gamesPerMove / compass.length;
@@ -19,7 +19,7 @@ public class MonteCarloSolver implements Solver {
 		int maxIndex = -1;
 		for (int i=0; i<4; i++) {
 			if (!board.canMove(compass[i])) continue;
-			
+
 			Board option = new Board(board);
 			option.move(compass[i]);
 			int sum = 0;
@@ -36,7 +36,7 @@ public class MonteCarloSolver implements Solver {
 			return Button.NONE;
 		return compass[maxIndex];
 	}
-	
+
 	@Override public ButtonScore getWorstLocation(Board board) {
 		Pos[] spaces = board.getEmptyLocations();
 		int games = gamesPerMove / (spaces.length*2);
@@ -72,7 +72,7 @@ public class MonteCarloSolver implements Solver {
 			return null;
 		return new ButtonScore(spaces[maxIndex], maxFour, (int)minScore);
 	}
-	
+
 	public int getFinalScore(Board board) {
 		Board game = new Board(board);
 		Button[] compass = Button.compass;
@@ -86,5 +86,5 @@ public class MonteCarloSolver implements Solver {
 		}
 		return game.getScore();
 	}
-	
+
 }

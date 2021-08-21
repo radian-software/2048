@@ -16,30 +16,30 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 public class Applet extends Frame {
-	
+
 	static int size = 4;
 	static int boxSize = 100;
 	static int boxSpacing = 20;
 	static int boxInterval = boxSize + boxSpacing;
 	static int borderSize = 100;
 	static int autoplayDelay = 20;
-	
+
 	static Font font = new Font("Dialog", Font.BOLD, 30);
 	static Color failureColor = new Color(255, 150, 150);
-	
+
 	transient GameManager game;
-	
+
 	public static void main(String[] args) {
 		Applet f = new Applet();
 		f.setVisible(true);
 	}
-	
+
 	public Applet() {
 		this.setSize(borderSize*2 + boxInterval*size - boxSpacing,
 				borderSize*2 + boxInterval*size - boxSpacing);
-		
+
 		JPanel panel = new JPanel();
-		
+
 		final class KeyAction extends AbstractAction {
 			private Button button;
 			public KeyAction(Button button) {
@@ -51,34 +51,34 @@ public class Applet extends Frame {
 				repaint();
 			}
 		}
-		
+
 		Button[] buttons = {Button.LEFT, Button.RIGHT, Button.UP, Button.DOWN,
 				Button.R, Button.H, Button.A, Button.P, Button.T};
 		for (Button button : buttons) {
 			panel.getInputMap().put(KeyStroke.getKeyStroke(button.name), button.name);
 			panel.getActionMap().put(button.name, new KeyAction(button));
 		}
-		
+
 		panel.setFocusable(true);
-		
+
 		this.add(panel);
-		
+
 		game = new GameManager(size, this);
 	}
-	
+
 	@Override public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
-		
+
 		if (game.getBoard().isValid()) g.setColor(Color.WHITE);
 		else g.setColor(failureColor);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
+
 		for (int i=0; i<size; i++) {
 			for (int j=0; j<size; j++) {
 				int x = borderSize + boxInterval*i;
 				int y = borderSize + boxInterval*j;
 				int tile = game.getBoard().getTile(i, j);
-				
+
 				g.setColor(game.getBoard().colors[i][j]);
 				g.fillRect(x, y, boxSize, boxSize);
 				g.setColor(Color.BLACK);
@@ -88,10 +88,10 @@ public class Applet extends Frame {
 				}
 			}
 		}
-		
+
 		g.setColor(Color.BLACK);
 		drawText(g2, new Pos((int)(getWidth()*3/4.0), borderSize/2), Integer.toString(game.getBoard().getScore()));
-		
+
 		if (game.getBoard().isValid()) {
 			new Timer().schedule(new TimerTask() {
 				@Override
@@ -100,9 +100,9 @@ public class Applet extends Frame {
 				}
 			}, autoplayDelay);
 		}
-		
+
 	}
-	
+
 	public void drawText(Graphics2D g2, Pos center, String text) {
 		g2.setColor(Color.BLACK);
 		g2.setFont(font);
@@ -113,5 +113,5 @@ public class Applet extends Frame {
 		int height = rect.height;
 		g2.drawString(text, center.x-length/2, center.y+height/2);
 	}
-	
+
 }

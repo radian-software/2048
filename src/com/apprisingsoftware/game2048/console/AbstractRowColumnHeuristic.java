@@ -6,10 +6,10 @@ import static com.apprisingsoftware.game2048.console.BoardStats.rowToOrder;
 import static com.apprisingsoftware.game2048.console.BoardStats.size;
 
 public abstract class AbstractRowColumnHeuristic extends AbstractHeuristic {
-	
+
 	static int[] heuristic;
 	{ generateHeuristicTable(); }
-	
+
 	@Override public int score(Board board) {
 		int score = 0;
 		for (int r=0; r<size; r++) {
@@ -21,7 +21,7 @@ public abstract class AbstractRowColumnHeuristic extends AbstractHeuristic {
 		return score;
 	}
 	public abstract int score(byte[] row);
-	
+
 	public synchronized void generateHeuristicTable() {
 		if (heuristic == null) {
 			heuristic = new int[length];
@@ -34,5 +34,5 @@ public abstract class AbstractRowColumnHeuristic extends AbstractHeuristic {
 	public static int score(short row) {
 		return heuristic[rowToIndex(row)];
 	}
-	
+
 }

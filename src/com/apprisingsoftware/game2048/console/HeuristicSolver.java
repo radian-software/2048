@@ -1,16 +1,16 @@
 package com.apprisingsoftware.game2048.console;
 
 public class HeuristicSolver implements Solver {
-	
+
 	private AbstractHeuristic heuristic;
 	private int recursionDepth;
-	
+
 	// Constructors
 	public HeuristicSolver(AbstractHeuristic heuristic, int recursionDepth) {
 		this.heuristic = heuristic;
 		this.recursionDepth = recursionDepth;
 	}
-	
+
 	// Interface methods
 	@Override public Button getBestDirection(Board board) {
 		ButtonScore advice = maximize(board, recursionDepth, true);
@@ -20,7 +20,7 @@ public class HeuristicSolver implements Solver {
 		ButtonScore advice = minimize(board, recursionDepth-1);
 		return advice;
 	}
-	
+
 	// ButtonScore returned contains Button and Score.
 	private ButtonScore maximize(Board board, int recursion, boolean random) {
 		Button[] compass = Button.compass;
@@ -28,7 +28,7 @@ public class HeuristicSolver implements Solver {
 		int maxIndex = -1;
 		for (int i=0; i<4; i++) {
 			if (!board.canMove(compass[i])) continue;
-			
+
 			Board option = new Board(board);
 			option.move(compass[i]);
 			int score;
@@ -43,7 +43,7 @@ public class HeuristicSolver implements Solver {
 			return new ButtonScore(Button.NONE, maxScore);
 		return new ButtonScore(compass[maxIndex], maxScore);
 	}
-	
+
 	// ButtonScore returned contains Score.
 	private ButtonScore expect(Board board, int recursion) {
 		if (recursion == 0) return new ButtonScore(heuristic.score(board));
@@ -60,7 +60,7 @@ public class HeuristicSolver implements Solver {
 		if (empty.length == 0) return new ButtonScore(0);
 		return new ButtonScore(score / (empty.length * 10));
 	}
-	
+
 	// ButtonScore returned contains Location, Four, and Score.
 	private ButtonScore minimize(Board board, int recursion) {
 		if (recursion == 0) return new ButtonScore(heuristic.score(board));

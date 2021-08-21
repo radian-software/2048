@@ -3,15 +3,15 @@ package com.apprisingsoftware.game2048.graphical;
 import java.util.Random;
 
 public class Solver {
-	
+
 	private static Random random = new Random();
-	
+
 	// AI selection function
-	
+
 	public static Button advise(Board board) {
 		return recursiveDecision(board, 4, 1.05).button;
 	}
-	
+
 	public static ButtonScore recursiveDecision(Board board, int recursion, double weight) {
 		if (recursion == 0) return new ButtonScore(Button.NONE, board.heuristic());
 		Button[] directions = Button.compass;
@@ -33,10 +33,10 @@ public class Solver {
 		}
 		return new ButtonScore(best, max);
 	}
-	
+
 	// Single-turn algorithm based on a weighted score of various factors.
 	// Heuristic factors taken from http://stackoverflow.com/a/22362818/3538165.
-	
+
 	public static Button adviseEvaluation(Board board) {
 		Button[] directions = Button.compass;
 		boolean[] validDirections = {false, false, false, false};
@@ -47,7 +47,7 @@ public class Solver {
 				numDirections += 1;
 			}
 		}
-		
+
 		double max = Double.MIN_VALUE;
 		int best = -1;
 		for (int i=0; i<4; i++) {
@@ -63,11 +63,11 @@ public class Solver {
 		}
 		return directions[best];
 	}
-	
+
 	// Recursive to try to order the tiles' values so as to increase towards one corner.
 	// Does not take into account new tiles.
 	// My idea.
-	
+
 	public static Button adviseOrdering(Board board, int recursion) {
 		Button[] directions = Button.compass;
 		int maxOrdering = Integer.MIN_VALUE;
@@ -87,7 +87,7 @@ public class Solver {
 		}
 		return directions[best];
 	}
-	
+
 	private static int getOrdering(Board board, int recursion) {
 		if (recursion <= 0) return board.getOrderingScore();
 		Button[] directions = Button.compass;
@@ -103,10 +103,10 @@ public class Solver {
 		}
 		return maxOrdering;
 	}
-	
+
 	// Recursive to find moves that minimize tiles on board. Does not take into account new tiles.
 	// My idea.
-	
+
 	public static Button adviseLeastTiles(Board board, int recursion) {
 		Button[] directions = Button.compass;
 		double leastTiles = Double.MAX_VALUE;
@@ -126,7 +126,7 @@ public class Solver {
 		}
 		return directions[best];
 	}
-	
+
 	private static double getLeastTiles(Board board, int recursion) {
 		if (recursion <= 0) return board.getScoreOnBoard();
 		Button[] directions = Button.compass;
@@ -142,10 +142,10 @@ public class Solver {
 		}
 		return leastTiles;
 	}
-	
+
 	// Recursive to find moves that maximize score. Does not take into account new tiles.
 	// My idea.
-	
+
 	public static Button adviseMaxScore(Board board, int recursion) {
 		Button[] directions = Button.compass;
 		int maxJoins = -1;
@@ -171,7 +171,7 @@ public class Solver {
 		if (best == -1) best = random.nextInt(4);
 		return directions[best];
 	}
-	
+
 	private static int getMaxScore(Board board, int recursion) {
 		if (recursion <= 0) return 0;
 		Button[] directions = Button.compass;
@@ -185,12 +185,12 @@ public class Solver {
 		}
 		return maxScore;
 	}
-	
+
 	// What does this look like?
-	
+
 	public static Button adviseRandom() {
 		Button[] buttons = {Button.LEFT, Button.RIGHT, Button.UP, Button.DOWN};
 		return buttons[new Random().nextInt(4)];
 	}
-	
+
 }

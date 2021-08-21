@@ -1,7 +1,7 @@
 package com.apprisingsoftware.game2048.console;
 
 public class MonotonicitySmoothnessHeuristic extends AbstractHeuristic {
-	
+
 	@Override public int score(Board board) {
 		int locs = board.getEmptyLocations().length;
 		if (locs == 0) board.testValidity();
@@ -30,5 +30,5 @@ public class MonotonicitySmoothnessHeuristic extends AbstractHeuristic {
 		int score = (int)(board.getScore() + Math.log(board.getScore()*locs - clustering));
 		return Math.max(score, Math.min(board.getScore(), 1));
 	}
-	
+
 }

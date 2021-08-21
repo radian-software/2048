@@ -1,12 +1,12 @@
 package com.apprisingsoftware.game2048.console;
 
 public class ButtonScore {
-	
+
 	public Button button;
 	public int score;
 	public Pos pos;
 	public boolean four;
-	
+
 	// For expect
 	public ButtonScore(int score) {
 		this.score = score;
@@ -22,5 +22,5 @@ public class ButtonScore {
 		this.four = four;
 		this.score = score;
 	}
-	
+
 }

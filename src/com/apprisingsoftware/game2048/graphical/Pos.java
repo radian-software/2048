@@ -1,20 +1,20 @@
 package com.apprisingsoftware.game2048.graphical;
 
 public class Pos {
-	
+
 	static final Pos[] compass = {new Pos(-1, 0), new Pos(1, 0),
 		new Pos(0, -1), new Pos(0, 1)};
-	
+
 	public int x;
 	public int y;
-	
+
 	public Pos(int x, int y) {
 		super();
-		
+
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public Pos(Button button) {
 		super();
 		switch (button) {
@@ -39,5 +39,5 @@ public class Pos {
 			y = 0;
 		}
 	}
-	
+
 }
